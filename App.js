@@ -12,15 +12,22 @@ export default class App extends Component {
   }
 
   componentDidMount() {
+    this.setCustomFontForPasswordTextInput()
 
   }
   setPasswordVisibility = () => {
     this.setState({ hidePassword: !this.state.hidePassword });
-    this.input.current.fontFamily = "Montserrat-Italic" 
+    this.setCustomFontForPasswordTextInput()
 
   }
 
-
+  setCustomFontForPasswordTextInput = () => {
+    this.input.current.setNativeProps({
+      style: {
+        fontFamily: "Montserrat-Italic"
+      }
+    })
+  }
 
 
   render() {
@@ -34,6 +41,8 @@ export default class App extends Component {
             style={styles.textBox}
             onChangeText={(text) => this.setState({ password: text })}
             value={this.state.password}
+            placeholder={'Password'}
+            autoCapitalize="none"
           />
           <TouchableOpacity activeOpacity={0.8} style={styles.touachableButton} onPress={this.setPasswordVisibility}>
             <Image source={(this.state.hidePassword) ? require('./images/hide.png') : require('./images/view.png')} style={styles.buttonImage} />
@@ -74,7 +83,6 @@ const styles = StyleSheet.create(
       paddingVertical: 0,
       borderColor: 'grey',
       borderRadius: 5,
-      fontFamily: "Montserrat-Italic"
     },
     touachableButton: {
       position: 'absolute',
